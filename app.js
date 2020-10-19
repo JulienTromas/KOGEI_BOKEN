@@ -43,18 +43,31 @@ app.get("/kogei_tabi/prefecture", (req, res) => {
     .select()
     .then(data => res.send(data))}),
 
+app.get("/kogei_tabi/categories", (req, res) => {
+  knex
+    .from('categories')
+    .select()
+    .then(data => res.send(data))}),
+
+app.get("/kogei_tabi/crafts", (req, res) => {
+  knex
+    .from('crafts')
+    .select()
+    .then(data => res.send(data))}),
+
+app.get("/kogei_tabi/crafts/", (req, res) => {
+  knex
+    .from('crafts')
+    .select()
+    .then(data => res.send(data))}),
+
+app.get("/kogei_tabi/crafts", (req, res) => {
+  knex
+    .from('crafts')
+    .select()
+    .then(data => res.send(data))}),
+
 
 app.listen(4000, () => {
     console.log("Listening @ 4000");
 })
-
-
-// knex.schema.createTable('prefecture', function (table) {
-//     table.increments();
-//     table.int('id');
-//     table.string('name');
-//     table.int('area_id');
-// }),
-// knex.schema.table('prefecture', function (table) {
-//     table.foreign('area_id').references('area.id')
- 
