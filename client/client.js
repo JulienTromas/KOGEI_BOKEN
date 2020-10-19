@@ -1,8 +1,6 @@
-
-
-
-
 const emojis = [':)', "^^", '323r23'];
+
+
 
 emojis.forEach(emoji => {
     const el = document.createElement('div');

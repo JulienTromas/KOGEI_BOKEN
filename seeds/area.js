@@ -5,15 +5,15 @@ exports.seed = function(knex) {
     .then(function () {
       // Inserts seed entries
       return knex('areas').insert([
-        {id: 1, name: 'Hokkaidō'},
-        {id: 2, name: 'Tōhoku'},
-        {id: 3, name: 'Kantō'},
-        {id: 4, name: 'Chūbu'},
-        {id: 5, name: 'Kansai'},
-        {id: 6, name: 'Chūgoku'},
-        {id: 7, name: 'Shikoku'},
-        {id: 8, name: 'Kyūshū'},
-        {id: 9, name: 'Okinawa'}
+        {id: 1, area_name: 'Hokkaidō'},
+        {id: 2, area_name: 'Tōhoku'},
+        {id: 3, area_name: 'Kantō'},
+        {id: 4, area_name: 'Chūbu'},
+        {id: 5, area_name: 'Kansai'},
+        {id: 6, area_name: 'Chūgoku'},
+        {id: 7, area_name: 'Shikoku'},
+        {id: 8, area_name: 'Kyūshū'},
+        {id: 9, area_name: 'Okinawa'}
       ]);
     });
 };
