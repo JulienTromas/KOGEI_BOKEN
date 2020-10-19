@@ -1,10 +1,10 @@
 
 exports.seed = function(knex) {
   // Deletes ALL existing entries
-  return knex('prefecture').del()
+  return knex('prefectures').del()
     .then(function () {
       // Inserts seed entries
-      return knex('prefecture').insert([
+      return knex('prefectures').insert([
         {
           id: 1,  
           name: "Hokkaidō",
