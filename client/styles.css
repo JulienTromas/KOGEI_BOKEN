@@ -1,2 +1,17 @@
-body{
+body {
+    background-image: url("https://www.tabido.jp/storage/articles/954/b7013537-3ad2-4407-b8c5-3b82e7f468fa.jpg");
+    background-color: #cccccc;
+    background-position: center center;
+  
+    background-repeat: no-repeat;
+
+    background-attachment: fixed;
+    
+    background-size: cover;
+   }
+
+#Readme{
+    background-color: #ffffff;
+    color: #ffffff;
+    margin: auto;
 }

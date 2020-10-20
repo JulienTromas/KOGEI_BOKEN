@@ -25,22 +25,18 @@ app.get("/kougei_bouken/areas", (req, res) => {
     .select()
     .then(data => res.send(data))}),
 
-app.get("/kougei_bouken/areas/id", (req, res) => {
+app.get("/kougei_bouken/prefectures", (req, res) => {
   knex
-    .from('areas')
-    .select('id')
-    .then(data => res.send(data))}),
-
-app.get("/kougei_bouken/areas/name", (req, res) => {
-  knex
-    .from('areas')
-    .select('name')
-    .then(data => res.send(data))}),
-
-app.get("/kougei_bouken/prefecture", (req, res) => {
-  knex
-    .from('prefecture')
+    .from('prefectures')
     .select()
+    .then(data => res.send(data))}),
+
+app.get("/kougei_bouken/area/:id/prefectures", (req, res) => {
+  knex
+    .from('prefectures')
+    .where({ area_id: req.params.id })
+    .select()
+
     .then(data => res.send(data))}),
 
 app.get("/kougei_bouken/categories", (req, res) => {
@@ -55,45 +51,78 @@ app.get("/kougei_bouken/crafts", (req, res) => {
     .select()
     .then(data => res.send(data))}),
 
-app.get("/kougei_bouken/crafts/name", (req, res) => {
+app.get("/kougei_bouken/prefecture/:id/crafts", (req, res) => {
   knex
     .from('crafts')
-    .select('english_name', 'japanese_name')
+    .where({ prefecture_id: req.params.id })
+    .select()
+
     .then(data => res.send(data))}),
 
-app.get("/kougei_bouken/crafts/name/:englishOrJapanese", (req, res) => {
-  const languageParameter = req.params.englishOrJapanese;
-  if(languageParameter.toLowerCase() === 'english'){
-    knex
+app.get("/kougei_bouken/prefecture/:id/crafts", (req, res) => {
+  knex
     .from('crafts')
-    .select('english_name')
-    .then(data => res.send(data))
-  }
-  else if(languageParameter.toLowerCase() === 'japanese'){
-    knex
-    .from('crafts')
-    .select('japanese_name')
-    .then(data => res.send(data))}
-  else { res.send(400)}
-  }),
+    .where({ prefecture_id: req.params.id })
+    .select()
 
-app.delete("/kougei_bouken/discovery_list/:id", (req, res) => {
-    knex('discovery_list')
+    .then(data => res.send(data))}),
+
+app.get("/kougei_bouken/category/:id/crafts", (req, res) => {
+  knex
+    .from('crafts')
+    .where({ category_id: req.params.id })
+    .select()
+
+    .then(data => res.send(data))}),
+
+app.delete("/kougei_bouken/prefecture/:id", async (req, res) => {
+  knex('prefectures')
     .where({ id: req.params.id })
     .del()
     .then((data) => {
-        res.sendStatus(200)
-    })
-  }),
+        res.sendStatus(200)})}),
 
-  app.patch("/kougei_bouken/discovery_list/:id/:newPrefecturename", async (req, res) => {
-    knex('discovery_list')
+app.patch("/kougei_bouken/area/:id/:newName", async (req, res) => {
+    knex('areas')
         .where({ id: req.params.id })
-        .update({ prefecture_name: req.params.newPrefecturename })
+        .update({ name: req.params.newName })
         .then(() => {
             res.sendStatus(200);
-        })
+        })}),
+
+app.post("/kougei_bouken/prefectures/:id/:name/:areaId", async (req, res) => {
+
+  const newId = req.params.id;
+  const newPrefName = req.params.name;
+  const newAreaName = req.params.areaId;
+
+  knex('prefectures')
+  .insert({ 
+      id: newId,
+      name: newPrefName,
+      area_id: newAreaName
+  })
+  .then(() => {
+      console.log('Added a new location to the list');
+      res.sendStatus(201);
+  })}),
+
+app.listen(4000, () => {
+    console.log("Listening @ 4000");
 });
+
+/*
+app.get("/kougei_bouken/areas/id", (req, res) => {
+  knex
+    .from('areas')
+    .select('id')
+    .then(data => res.send(data))}),
+
+app.get("/kougei_bouken/areas/name", (req, res) => {
+  knex
+    .from('areas')
+    .select('name')
+    .then(data => res.send(data))}),
 
 app.post("/kougei_bouken/discovery_list/:id/:prefectureName/:categoryName/:englishName/:japaneseName/:adress/:openingHours", (req, res) => {
   const newId = req.params.id;
@@ -117,8 +146,37 @@ app.post("/kougei_bouken/discovery_list/:id/:prefectureName/:categoryName/:engli
             console.log('Added a new location to the list');
             res.sendStatus(201);
         })
-});
 
-app.listen(4000, () => {
-    console.log("Listening @ 4000");
-})
+app.delete("/kougei_bouken/discovery_list/:id", (req, res) => {
+    knex('discovery_list')
+    .where({ id: req.params.id })
+    .del()
+    .then((data) => {
+        res.sendStatus(200)
+    })
+  }),
+
+  app.patch("/kougei_bouken/prefecture/:prefectureName", async (req, res) => {
+    knex('prefectures')
+        .where({ id: req.params.id })
+        .update({ prefecture_name: req.params.newPrefecturename })
+        .then(() => {
+            res.sendStatus(200);
+        })
+
+
+  app.get("/kougei_bouken/crafts/name/:englishOrJapanese", (req, res) => {
+    const languageParameter = req.params.englishOrJapanese;
+    if(languageParameter.toLowerCase() === 'english'){
+      knex
+      .from('crafts')
+      .select('english_name')
+      .then(data => res.send(data))
+    }
+    else if(languageParameter.toLowerCase() === 'japanese'){
+      knex
+      .from('crafts')
+      .select('japanese_name')
+      .then(data => res.send(data))}
+    else { res.send(400)}
+    })*/
