@@ -5,8 +5,8 @@ module.exports = {
   development: {
     client: 'postgresql',
     connection: {
-      database: 'kougei_bouken',
-      user: 'julientromas',
+      database: 'my_db',
+      user: 'username',
     },
     seeds: {
       directory: './seeds'
